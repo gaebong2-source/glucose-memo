@@ -1,0 +1,36 @@
+/* 안전 영역 (iOS notch) */
+.safe-area {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 입력 시 zoom 방지 (iOS) */
+input, textarea, select { font-size: 16px; }
+
+/* 활성 네비 버튼 */
+.nav-btn.active {
+  color: #0284c7;
+  font-weight: 600;
+}
+.nav-btn:not(.active) { color: #64748b; }
+
+/* 컨텍스트 / 요일 버튼 활성 */
+.ctx-btn.active, .day-btn.active, .range-btn.active {
+  background-color: #0ea5e9;
+  border-color: #0ea5e9;
+  color: #fff;
+}
+
+/* 스크롤바 약간 부드럽게 */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* 모달 슬라이드업 */
+.modal:not(.hidden) > div {
+  animation: slideUp .2s ease-out;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
