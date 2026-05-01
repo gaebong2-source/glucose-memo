@@ -33,6 +33,35 @@
   <script src="https://apis.google.com/js/api.js" async defer></script>
 
   <link rel="stylesheet" href="styles.css" />
+
+  <script>
+    // 디버그용: JS 에러를 화면 상단에 빨간 배너로 표시
+    (function () {
+      function showErr(msg) {
+        var d = document.createElement('div');
+        d.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#dc2626;color:#fff;padding:8px 12px;z-index:99999;font:12px/1.4 monospace;white-space:pre-wrap;word-break:break-all;max-height:50vh;overflow:auto;border-bottom:2px solid #991b1b;';
+        d.textContent = msg;
+        d.addEventListener('click', function () { d.remove(); });
+        (document.body || document.documentElement).appendChild(d);
+      }
+      window.addEventListener('error', function (e) {
+        showErr('[JS 에러] ' + (e.message || '') + '\n' + (e.filename || '') + ':' + (e.lineno || '') + '\n(탭 눌러 닫기)');
+      });
+      window.addEventListener('unhandledrejection', function (e) {
+        var r = e.reason;
+        showErr('[Promise 거부] ' + (r && r.message ? r.message : r) + '\n(탭 눌러 닫기)');
+      });
+      // CDN 로드 확인
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          var miss = [];
+          if (typeof Dexie === 'undefined') miss.push('Dexie');
+          if (typeof Chart === 'undefined') miss.push('Chart.js');
+          if (miss.length) showErr('[CDN 로드 실패] ' + miss.join(', ') + ' — 광고차단/네트워크 확인');
+        }, 1500);
+      });
+    })();
+  </script>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen pb-24 safe-area">
   <header class="sticky top-0 z-30 bg-white border-b border-slate-200">
